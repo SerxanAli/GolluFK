@@ -196,7 +196,6 @@
             max-width: 1000px;
         }
 
-        /* BÖYÜK LOQO HERO-DA */
         .hero-logo {
             width: 220px;
             height: 220px;
@@ -1026,7 +1025,7 @@
         /* ======== PLAYERS ======== */
         .player-list {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
             gap: 18px;
             max-width: 1400px;
             margin: 0 auto;
@@ -1084,52 +1083,59 @@
             box-shadow: 0 20px 50px rgba(255, 215, 0, 0.4);
         }
 
-        .player-number {
-            width: 55px; height: 55px;
-            border-radius: 14px;
-            background: linear-gradient(135deg, var(--green-dark), var(--green));
-            color: var(--dark);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-family: 'Orbitron', sans-serif;
-            font-weight: 900;
-            font-size: 20px;
-            flex-shrink: 0;
-            box-shadow: 0 8px 20px rgba(0, 255, 136, 0.3);
-            transition: transform 0.3s;
-            position: relative;
-        }
-
-        .player-card.captain .player-number {
-            background: linear-gradient(135deg, var(--gold), #ff9800);
-            color: var(--dark);
-            box-shadow: 0 8px 25px rgba(255, 215, 0, 0.6);
-        }
-
-        .captain-badge {
-            position: absolute;
-            top: -12px;
-            right: -12px;
-            width: 28px;
-            height: 28px;
-            background: var(--gold);
+        /* OYUNÇU ŞƏKLİ */
+        .player-photo {
+            width: 60px;
+            height: 60px;
             border-radius: 50%;
+            overflow: hidden;
+            flex-shrink: 0;
+            border: 2px solid var(--green);
+            box-shadow: 0 0 15px rgba(0, 255, 136, 0.4);
+            background: linear-gradient(135deg, var(--green-dark), var(--green));
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 16px;
-            box-shadow: 0 0 15px var(--gold);
-            animation: pulse 2s infinite;
-            z-index: 2;
+            position: relative;
+            transition: all 0.4s;
         }
 
-        .player-card:hover .player-number { transform: rotate(-8deg) scale(1.1); }
+        .player-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .player-photo::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            border-radius: 50%;
+            box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.3);
+            pointer-events: none;
+        }
+
+        .player-card.captain .player-photo {
+            border-color: var(--gold);
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.6);
+        }
+
+        .player-card:hover .player-photo {
+            transform: scale(1.08);
+            border-color: var(--green);
+            box-shadow: 0 0 25px var(--green);
+        }
+
+        .player-card.captain:hover .player-photo {
+            border-color: var(--gold);
+            box-shadow: 0 0 30px var(--gold);
+        }
 
         .player-info { flex: 1; min-width: 0; }
 
         .player-info h3 {
-            font-size: 16px;
+            font-size: 15px;
             font-weight: 700;
             margin-bottom: 3px;
             white-space: nowrap;
@@ -1146,10 +1152,10 @@
         }
 
         .captain-label {
-            font-size: 10px;
+            font-size: 9px;
             background: var(--gold);
             color: var(--dark);
-            padding: 2px 8px;
+            padding: 2px 7px;
             border-radius: 10px;
             font-weight: 900;
             letter-spacing: 1px;
@@ -1158,9 +1164,62 @@
         }
 
         .player-info p {
-            font-size: 13px;
+            font-size: 12px;
             color: var(--muted);
             letter-spacing: 0.5px;
+        }
+
+        /* ===== SAĞ TƏRƏFDƏ NÖMRƏ (yeni) ===== */
+        .player-number-right {
+            flex-shrink: 0;
+            min-width: 48px;
+            height: 48px;
+            padding: 0 10px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, var(--green-dark), var(--green));
+            color: var(--dark);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 900;
+            font-size: 18px;
+            letter-spacing: 1px;
+            border: 2px solid rgba(0, 255, 136, 0.3);
+            box-shadow: 0 0 20px rgba(0, 255, 136, 0.5), inset 0 0 10px rgba(255, 255, 255, 0.2);
+            transition: all 0.4s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .player-number-right::before {
+            content: "";
+            position: absolute;
+            top: 0; left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.6s;
+        }
+
+        .player-card:hover .player-number-right::before {
+            left: 100%;
+        }
+
+        .player-card.captain .player-number-right {
+            background: linear-gradient(135deg, var(--gold), #ff9800);
+            border-color: rgba(255, 215, 0, 0.4);
+            box-shadow: 0 0 25px rgba(255, 215, 0, 0.7), inset 0 0 10px rgba(255, 255, 255, 0.3);
+            color: var(--dark);
+        }
+
+        .player-card:hover .player-number-right {
+            transform: scale(1.1) rotate(-5deg);
+            box-shadow: 0 0 30px var(--green), inset 0 0 15px rgba(255, 255, 255, 0.3);
+        }
+
+        .player-card.captain:hover .player-number-right {
+            box-shadow: 0 0 35px var(--gold), inset 0 0 15px rgba(255, 255, 255, 0.4);
         }
 
         /* ======== MATCHES ======== */
@@ -1700,6 +1759,17 @@
             .fanclub-stat .num {
                 font-size: 32px;
             }
+
+            .player-list {
+                grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            }
+
+            .player-number-right {
+                min-width: 42px;
+                height: 42px;
+                font-size: 16px;
+                padding: 0 8px;
+            }
         }
 
         @media (max-width: 600px) {
@@ -1719,6 +1789,10 @@
 
             .video-card video {
                 height: 200px;
+            }
+
+            .player-list {
+                grid-template-columns: 1fr;
             }
         }
 
@@ -1833,7 +1907,6 @@
             <div class="section-line"></div>
         </div>
         <div class="media-scroll-wrapper">
-            <!-- Original team photo -->
             <div class="media-card reveal">
                 <img src="team-photo.jpeg" alt="Göllü FK Komandası">
                 <div class="media-caption">
@@ -1841,7 +1914,6 @@
                     <p>2026 Sezonu • B Qrupu</p>
                 </div>
             </div>
-            <!-- New photo 1 -->
             <div class="media-card reveal">
                 <img src="team-photo1.jpeg" alt="Göllü FK Komandası 1">
                 <div class="media-caption">
@@ -1849,7 +1921,6 @@
                     <p>Komanda Şəkli • 1</p>
                 </div>
             </div>
-            <!-- New photo 2 -->
             <div class="media-card reveal">
                 <img src="team-photo2.jpeg" alt="Göllü FK Komandası 2">
                 <div class="media-caption">
@@ -2020,32 +2091,182 @@
             <div class="section-line"></div>
         </div>
         <div class="player-list">
-            <div class="player-card reveal"><div class="player-number">1</div><div class="player-info"><h3>Yusifov Rəşad</h3><p>Fazil oğlu</p></div></div>
-            <div class="player-card reveal"><div class="player-number">2</div><div class="player-info"><h3>Əliyev Sərxan</h3><p>Vahid oğlu</p></div></div>
-            <div class="player-card reveal"><div class="player-number">3</div><div class="player-info"><h3>Həbibov Şahin</h3><p>Rəşid oğlu</p></div></div>
-              <div class="player-card captain reveal">
-                <div class="player-number">
-                    4
-                    <div class="captain-badge">👑</div>
+            <!-- 1 - Rəşad -->
+            <div class="player-card reveal">
+                <div class="player-photo">
+                    <img src="oyuncular/1.jpg" alt="Yusifov Rəşad" onerror="this.style.display='none';this.parentElement.innerHTML='<span style=\'font-size:22px;font-family:Orbitron;font-weight:900;color:#050b14\'>1</span>'">
+                </div>
+                <div class="player-info">
+                    <h3>Yusifov Rəşad</h3>
+                    <p>Fazil oğlu</p>
+                </div>
+                <div class="player-number-right">1</div>
+            </div>
+            <!-- 2 - Sərxan -->
+            <div class="player-card reveal">
+                <div class="player-photo">
+                    <img src="oyuncular/2.jpg" alt="Əliyev Sərxan" onerror="this.style.display='none';this.parentElement.innerHTML='<span style=\'font-size:22px;font-family:Orbitron;font-weight:900;color:#050b14\'>2</span>'">
+                </div>
+                <div class="player-info">
+                    <h3>Əliyev Sərxan</h3>
+                    <p>Vahid oğlu</p>
+                </div>
+                <div class="player-number-right">2</div>
+            </div>
+            <!-- 3 - Şahin -->
+            <div class="player-card reveal">
+                <div class="player-photo">
+                    <img src="oyuncular/3.jpg" alt="Həbibov Şahin" onerror="this.style.display='none';this.parentElement.innerHTML='<span style=\'font-size:22px;font-family:Orbitron;font-weight:900;color:#050b14\'>3</span>'">
+                </div>
+                <div class="player-info">
+                    <h3>Həbibov Şahin</h3>
+                    <p>Rəşid oğlu</p>
+                </div>
+                <div class="player-number-right">3</div>
+            </div>
+            <!-- 4 - Samed (Kapitan) -->
+            <div class="player-card captain reveal">
+                <div class="player-photo">
+                    <img src="oyuncular/4.jpg" alt="Asadov Samed" onerror="this.style.display='none';this.parentElement.innerHTML='<span style=\'font-size:22px;font-family:Orbitron;font-weight:900;color:#050b14\'>4</span>'">
                 </div>
                 <div class="player-info">
                     <h3>Asadov Samed <span class="captain-label">Kapitan</span></h3>
                     <p>Teymur oğlu</p>
                 </div>
+                <div class="player-number-right">4</div>
             </div>
-            <div class="player-card reveal"><div class="player-number">5</div><div class="player-info"><h3>Qurbanov Sadiq</h3><p>Hafiz oğlu</p></div></div>
-            <div class="player-card reveal"><div class="player-number">7</div><div class="player-info"><h3>Yusifov Mövlud</h3><p>Fariz oğlu</p></div></div>
-            <div class="player-card reveal"><div class="player-number">8</div><div class="player-info"><h3>Tanrıverdiyev Qəməddin</h3><p>Rəfail oğlu</p></div></div>
-            <div class="player-card reveal"><div class="player-number">9</div><div class="player-info"><h3>Kərimov Niyaməddin</h3><p>Ələddin oğlu</p></div></div>
-            <div class="player-card reveal"><div class="player-number">10</div><div class="player-info"><h3>Tanrıverdiyev Samid</h3><p>Rəfail oğlu</p></div></div>
-            <div class="player-card reveal"><div class="player-number">11</div><div class="player-info"><h3>İbrahimzadə Ayaz</h3><p>Niyaz oğlu</p></div></div>
-            <div class="player-card reveal"><div class="player-number">12</div><div class="player-info"><h3>Qəribov Hüseyn</h3><p>Zəfər oğlu</p></div></div>
-            <div class="player-card reveal"><div class="player-number">13</div><div class="player-info"><h3>Həbibov Qasım</h3><p>Şaban oğlu</p></div></div>
-            <div class="player-card reveal"><div class="player-number">15</div><div class="player-info"><h3>İbrahimov Namiq</h3><p>Vəzir oğlu</p></div></div>
-            <div class="player-card reveal"><div class="player-number">22</div><div class="player-info"><h3>İbrahimov Həmid</h3><p>Nazir oğlu</p></div></div>
-            <div class="player-card reveal"><div class="player-number">77</div><div class="player-info"><h3>İbrahimov Devrim</h3><p>Natiq oğlu</p></div></div>
-            <div class="player-card reveal"><div class="player-number">88</div><div class="player-info"><h3>Dərvişov Qurban</h3><p>İlham oğlu</p></div></div>
-
+            <!-- 5 - Sadiq -->
+            <div class="player-card reveal">
+                <div class="player-photo">
+                    <img src="oyuncular/5.jpg" alt="Qurbanov Sadiq" onerror="this.style.display='none';this.parentElement.innerHTML='<span style=\'font-size:22px;font-family:Orbitron;font-weight:900;color:#050b14\'>5</span>'">
+                </div>
+                <div class="player-info">
+                    <h3>Qurbanov Sadiq</h3>
+                    <p>Hafiz oğlu</p>
+                </div>
+                <div class="player-number-right">5</div>
+            </div>
+            <!-- 7 - Mövlud -->
+            <div class="player-card reveal">
+                <div class="player-photo">
+                    <img src="oyuncular/7.jpg" alt="Yusifov Mövlud" onerror="this.style.display='none';this.parentElement.innerHTML='<span style=\'font-size:22px;font-family:Orbitron;font-weight:900;color:#050b14\'>7</span>'">
+                </div>
+                <div class="player-info">
+                    <h3>Yusifov Mövlud</h3>
+                    <p>Fariz oğlu</p>
+                </div>
+                <div class="player-number-right">7</div>
+            </div>
+            <!-- 8 - Qəməddin -->
+            <div class="player-card reveal">
+                <div class="player-photo">
+                    <img src="oyuncular/8.jpg" alt="Tanrıverdiyev Qəməddin" onerror="this.style.display='none';this.parentElement.innerHTML='<span style=\'font-size:22px;font-family:Orbitron;font-weight:900;color:#050b14\'>8</span>'">
+                </div>
+                <div class="player-info">
+                    <h3>Tanrıverdiyev Qəməddin</h3>
+                    <p>Rəfail oğlu</p>
+                </div>
+                <div class="player-number-right">8</div>
+            </div>
+            <!-- 9 - Niyaməddin -->
+            <div class="player-card reveal">
+                <div class="player-photo">
+                    <img src="oyuncular/9.jpg" alt="Kərimov Niyaməddin" onerror="this.style.display='none';this.parentElement.innerHTML='<span style=\'font-size:22px;font-family:Orbitron;font-weight:900;color:#050b14\'>9</span>'">
+                </div>
+                <div class="player-info">
+                    <h3>Kərimov Niyaməddin</h3>
+                    <p>Ələddin oğlu</p>
+                </div>
+                <div class="player-number-right">9</div>
+            </div>
+            <!-- 10 - Samid -->
+            <div class="player-card reveal">
+                <div class="player-photo">
+                    <img src="oyuncular/10.jpg" alt="Tanrıverdiyev Samid" onerror="this.style.display='none';this.parentElement.innerHTML='<span style=\'font-size:22px;font-family:Orbitron;font-weight:900;color:#050b14\'>10</span>'">
+                </div>
+                <div class="player-info">
+                    <h3>Tanrıverdiyev Samid</h3>
+                    <p>Rəfail oğlu</p>
+                </div>
+                <div class="player-number-right">10</div>
+            </div>
+            <!-- 11 - Ayaz -->
+            <div class="player-card reveal">
+                <div class="player-photo">
+                    <img src="oyuncular/11.jpg" alt="İbrahimzadə Ayaz" onerror="this.style.display='none';this.parentElement.innerHTML='<span style=\'font-size:22px;font-family:Orbitron;font-weight:900;color:#050b14\'>11</span>'">
+                </div>
+                <div class="player-info">
+                    <h3>İbrahimzadə Ayaz</h3>
+                    <p>Niyaz oğlu</p>
+                </div>
+                <div class="player-number-right">11</div>
+            </div>
+            <!-- 12 - Hüseyn -->
+            <div class="player-card reveal">
+                <div class="player-photo">
+                    <img src="oyuncular/12.jpg" alt="Qəribov Hüseyn" onerror="this.style.display='none';this.parentElement.innerHTML='<span style=\'font-size:22px;font-family:Orbitron;font-weight:900;color:#050b14\'>12</span>'">
+                </div>
+                <div class="player-info">
+                    <h3>Qəribov Hüseyn</h3>
+                    <p>Zəfər oğlu</p>
+                </div>
+                <div class="player-number-right">12</div>
+            </div>
+            <!-- 13 - Qasım -->
+            <div class="player-card reveal">
+                <div class="player-photo">
+                    <img src="oyuncular/13.jpg" alt="Həbibov Qasım" onerror="this.style.display='none';this.parentElement.innerHTML='<span style=\'font-size:22px;font-family:Orbitron;font-weight:900;color:#050b14\'>13</span>'">
+                </div>
+                <div class="player-info">
+                    <h3>Həbibov Qasım</h3>
+                    <p>Şaban oğlu</p>
+                </div>
+                <div class="player-number-right">13</div>
+            </div>
+            <!-- 15 - Namiq -->
+            <div class="player-card reveal">
+                <div class="player-photo">
+                    <img src="oyuncular/15.jpg" alt="İbrahimov Namiq" onerror="this.style.display='none';this.parentElement.innerHTML='<span style=\'font-size:22px;font-family:Orbitron;font-weight:900;color:#050b14\'>15</span>'">
+                </div>
+                <div class="player-info">
+                    <h3>İbrahimov Namiq</h3>
+                    <p>Vəzir oğlu</p>
+                </div>
+                <div class="player-number-right">15</div>
+            </div>
+            <!-- 22 - Həmid -->
+            <div class="player-card reveal">
+                <div class="player-photo">
+                    <img src="oyuncular/22.jpg" alt="İbrahimov Həmid" onerror="this.style.display='none';this.parentElement.innerHTML='<span style=\'font-size:22px;font-family:Orbitron;font-weight:900;color:#050b14\'>22</span>'">
+                </div>
+                <div class="player-info">
+                    <h3>İbrahimov Həmid</h3>
+                    <p>Nazir oğlu</p>
+                </div>
+                <div class="player-number-right">22</div>
+            </div>
+            <!-- 77 - Devrim -->
+            <div class="player-card reveal">
+                <div class="player-photo">
+                    <img src="oyuncular/77.jpg" alt="İbrahimov Devrim" onerror="this.style.display='none';this.parentElement.innerHTML='<span style=\'font-size:22px;font-family:Orbitron;font-weight:900;color:#050b14\'>77</span>'">
+                </div>
+                <div class="player-info">
+                    <h3>İbrahimov Devrim</h3>
+                    <p>Natiq oğlu</p>
+                </div>
+                <div class="player-number-right">77</div>
+            </div>
+            <!-- 88 - Qurban -->
+            <div class="player-card reveal">
+                <div class="player-photo">
+                    <img src="oyuncular/88.jpg" alt="Dərvişov Qurban" onerror="this.style.display='none';this.parentElement.innerHTML='<span style=\'font-size:22px;font-family:Orbitron;font-weight:900;color:#050b14\'>88</span>'">
+                </div>
+                <div class="player-info">
+                    <h3>Dərvişov Qurban</h3>
+                    <p>İlham oğlu</p>
+                </div>
+                <div class="player-number-right">88</div>
+            </div>
         </div>
     </section>
 
