@@ -484,55 +484,114 @@
             box-shadow: 0 0 15px rgba(0, 176, 255, 0.4);
         }
 
-        /* ======== TEAM PHOTO ======== */
+        /* ======== TEAM PHOTO + VIDEO SCROLL ======== */
         .team-photo-section { padding-top: 50px; }
 
-        .team-photo-wrapper {
-            position: relative;
-            max-width: 1100px;
+        .media-scroll-wrapper {
+            max-width: 1200px;
             margin: 0 auto;
+            overflow-x: auto;
+            overflow-y: hidden;
+            display: flex;
+            gap: 25px;
+            padding: 10px 5px 30px;
+            scroll-snap-type: x mandatory;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: thin;
+            scrollbar-color: var(--green) rgba(16, 42, 58, 0.5);
+        }
+
+        .media-scroll-wrapper::-webkit-scrollbar {
+            height: 10px;
+        }
+
+        .media-scroll-wrapper::-webkit-scrollbar-track {
+            background: rgba(16, 42, 58, 0.5);
+            border-radius: 10px;
+        }
+
+        .media-scroll-wrapper::-webkit-scrollbar-thumb {
+            background: linear-gradient(90deg, var(--green-dark), var(--green));
+            border-radius: 10px;
+            box-shadow: 0 0 10px var(--green);
+        }
+
+        .media-scroll-wrapper::-webkit-scrollbar-thumb:hover {
+            background: var(--green);
+        }
+
+        .media-card {
+            flex: 0 0 600px;
+            scroll-snap-align: start;
             border-radius: 24px;
             overflow: hidden;
             box-shadow: 0 30px 80px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(0, 255, 136, 0.2);
             transition: transform 0.5s;
+            position: relative;
+            background: rgba(16, 42, 58, 0.5);
+            backdrop-filter: blur(10px);
         }
 
-        .team-photo-wrapper:hover { transform: scale(1.02); }
+        .media-card:hover { transform: scale(1.02); }
 
-        .team-photo-wrapper::before {
+        .media-card img,
+        .media-card video {
+            width: 100%;
+            display: block;
+            height: 400px;
+            object-fit: cover;
+            filter: saturate(1.1) contrast(1.05);
+        }
+
+        .media-card video {
+            object-fit: cover;
+            background: #000;
+        }
+
+        .media-card::before {
             content: "";
             position: absolute;
             inset: 0;
             background: linear-gradient(180deg, transparent 50%, rgba(5,11,20,0.85) 100%);
             z-index: 1;
             pointer-events: none;
+            border-radius: 24px;
         }
 
-        .team-photo-wrapper img {
-            width: 100%;
-            display: block;
-            filter: saturate(1.1) contrast(1.05);
-        }
-
-        .team-photo-caption {
+        .media-caption {
             position: absolute;
             bottom: 25px;
             left: 30px;
             z-index: 2;
         }
 
-        .team-photo-caption h3 {
+        .media-caption h3 {
             font-family: 'Orbitron', sans-serif;
             font-size: 26px;
             letter-spacing: 2px;
             margin-bottom: 5px;
         }
 
-        .team-photo-caption p {
+        .media-caption p {
             color: var(--green);
             letter-spacing: 2px;
             font-size: 14px;
             text-transform: uppercase;
+        }
+
+        .scroll-hint {
+            text-align: center;
+            color: var(--muted);
+            font-size: 13px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-top: 10px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
         }
 
         /* ======== STANDINGS ======== */
@@ -647,7 +706,7 @@
             flex-shrink: 0;
         }
 
-        /* ======== BOMBARDIR ======== */
+        /* ======== BOMBARDİR ======== */
         .scorers-list {
             max-width: 700px;
             margin: 0 auto;
@@ -929,6 +988,91 @@
             font-weight: 600;
             letter-spacing: 1px;
             color: var(--green);
+        }
+
+        /* ======== HƏFTƏNİN HESABI ======== */
+        .week-results-list {
+            max-width: 800px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .week-result-row {
+            background: rgba(16, 42, 58, 0.5);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(0, 255, 136, 0.15);
+            border-radius: 14px;
+            padding: 18px 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.4s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .week-result-row::before {
+            content: "";
+            position: absolute;
+            left: 0; top: 0;
+            height: 100%; width: 4px;
+            background: var(--green);
+            box-shadow: 0 0 15px var(--green);
+        }
+
+        .week-result-row:hover {
+            transform: translateX(8px);
+            border-color: var(--green);
+            box-shadow: 0 10px 30px rgba(0, 255, 136, 0.2);
+        }
+
+        .week-result-row.gollu-week {
+            background: linear-gradient(90deg, rgba(0, 200, 83, 0.2), rgba(0, 255, 136, 0.05));
+            border: 1px solid var(--green);
+            box-shadow: 0 0 25px rgba(0, 255, 136, 0.2);
+        }
+
+        .week-match {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 16px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .week-score {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 22px;
+            font-weight: 900;
+            color: var(--green);
+            text-shadow: 0 0 15px var(--green);
+            background: rgba(0, 255, 136, 0.1);
+            padding: 5px 15px;
+            border-radius: 10px;
+            border: 1px solid rgba(0, 255, 136, 0.3);
+        }
+
+        .week-result-row.gollu-week .week-score {
+            color: var(--gold);
+            text-shadow: 0 0 20px var(--gold);
+            background: rgba(255, 215, 0, 0.1);
+            border-color: rgba(255, 215, 0, 0.4);
+        }
+
+        .week-badge {
+            font-size: 11px;
+            padding: 3px 10px;
+            border-radius: 20px;
+            background: rgba(0, 255, 136, 0.15);
+            color: var(--green);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            font-weight: 700;
         }
 
         /* ======== RESULTS ======== */
@@ -1285,6 +1429,26 @@
 
             .dev-credit-name::before,
             .dev-credit-name::after { display: none; }
+
+            .media-card {
+                flex: 0 0 85vw;
+            }
+
+            .media-card img,
+            .media-card video {
+                height: 260px;
+            }
+
+            .week-result-row {
+                flex-direction: column;
+                gap: 10px;
+                text-align: center;
+            }
+
+            .week-match {
+                justify-content: center;
+                font-size: 14px;
+            }
         }
 
         @media (max-width: 600px) {
@@ -1293,6 +1457,15 @@
             .team-photo-caption { bottom: 15px; left: 20px; }
             .hero-stat .num { font-size: 30px; }
             .hero-logo { width: 130px; height: 130px; }
+
+            .media-card {
+                flex: 0 0 90vw;
+            }
+
+            .media-card img,
+            .media-card video {
+                height: 220px;
+            }
         }
 
         ::-webkit-scrollbar { width: 10px; }
@@ -1327,6 +1500,7 @@
             <a href="#scorers">Bombardir</a>
             <a href="#team">Komanda</a>
             <a href="#matches">Oyunlar</a>
+            <a href="#week-account">Həftə Hesabı</a>
             <a href="#results">Nəticələr</a>
         </nav>
         <div class="hamburger" id="hamburger">
@@ -1346,7 +1520,7 @@
             
             <div class="hero-stats">
                 <div class="hero-stat">
-                    <span class="num" data-count="3">0</span>
+                    <span class="num" data-count="6">0</span>
                     <span class="lbl">Xal</span>
                 </div>
                 <div class="hero-stat">
@@ -1354,11 +1528,11 @@
                     <span class="lbl">Oyunçu</span>
                 </div>
                 <div class="hero-stat">
-                    <span class="num" data-count="8">0</span>
+                    <span class="num" data-count="12">0</span>
                     <span class="lbl">Qol</span>
                 </div>
                 <div class="hero-stat">
-                    <span class="num" data-count="1">0</span>
+                    <span class="num" data-count="2">0</span>
                     <span class="lbl">Qələbə</span>
                 </div>
             </div>
@@ -1395,20 +1569,51 @@
         </div>
     </section>
 
-    <!-- TEAM PHOTO -->
+    <!-- TEAM PHOTO + VIDEO SCROLL -->
     <section class="team-photo-section">
         <div class="section-header reveal">
             <span class="section-tag">// Komandamız</span>
             <h2 class="section-title">BİZ BİR AİLƏYİK</h2>
             <div class="section-line"></div>
         </div>
-        <div class="team-photo-wrapper reveal">
-            <img src="team-photo.jpeg" alt="Göllü FK Komandası">
-            <div class="team-photo-caption">
-                <h3>GÖLLÜ FK</h3>
-                <p>2026 Sezonu • B Qrupu</p>
+        <div class="media-scroll-wrapper">
+            <!-- Original team photo -->
+            <div class="media-card reveal">
+                <img src="team-photo.jpeg" alt="Göllü FK Komandası">
+                <div class="media-caption">
+                    <h3>GÖLLÜ FK</h3>
+                    <p>2026 Sezonu • B Qrupu</p>
+                </div>
+            </div>
+            <!-- New photo 1 -->
+            <div class="media-card reveal">
+                <img src="team-photo1.jpeg" alt="Göllü FK Komandası 1">
+                <div class="media-caption">
+                    <h3>GÖLLÜ FK</h3>
+                    <p>Komanda Şəkli • 1</p>
+                </div>
+            </div>
+            <!-- New photo 2 -->
+            <div class="media-card reveal">
+                <img src="team-photo2.jpeg" alt="Göllü FK Komandası 2">
+                <div class="media-caption">
+                    <h3>GÖLLÜ FK</h3>
+                    <p>Komanda Şəkli • 2</p>
+                </div>
+            </div>
+            <!-- Video -->
+            <div class="media-card reveal">
+                <video controls muted loop playsinline>
+                    <source src="video.mp4" type="video/mp4">
+                    Brauzeriniz video dəstəkləmir.
+                </video>
+                <div class="media-caption">
+                    <h3>VİDEO</h3>
+                    <p>Komanda Anları</p>
+                </div>
             </div>
         </div>
+        <div class="scroll-hint reveal">← Sağa sürüşdürün →</div>
     </section>
 
     <!-- STANDINGS -->
@@ -1420,43 +1625,43 @@
         </div>
 
         <div class="standings-list" id="standingsList">
-            <div class="standings-row" data-team="Güllüce" data-points="6">
+            <div class="standings-row" data-team="İlanlı" data-points="7">
                 <div class="standings-rank">#1</div>
-                <div class="standings-name">GÜLLÜCE</div>
+                <div class="standings-name">İLANLI</div>
+                <div class="standings-points">7</div>
+                <div class="standings-label">XAL</div>
+            </div>
+            <div class="standings-row" data-team="Güllücə" data-points="6">
+                <div class="standings-rank">#2</div>
+                <div class="standings-name">GÜLLÜCƏ</div>
+                <div class="standings-points">6</div>
+                <div class="standings-label">XAL</div>
+            </div>
+            <div class="standings-row" data-team="Göllü" data-points="6">
+                <div class="standings-rank">#3</div>
+                <div class="standings-name">GÖLLÜ FK <span class="standings-star">⭐</span></div>
                 <div class="standings-points">6</div>
                 <div class="standings-label">XAL</div>
             </div>
             <div class="standings-row" data-team="Daşkörpü" data-points="4">
-                <div class="standings-rank">#2</div>
+                <div class="standings-rank">#4</div>
                 <div class="standings-name">DAŞKÖRPÜ</div>
                 <div class="standings-points">4</div>
                 <div class="standings-label">XAL</div>
             </div>
-            <div class="standings-row" data-team="İlannı" data-points="4">
-                <div class="standings-rank">#3</div>
-                <div class="standings-name">İLANNI</div>
-                <div class="standings-points">4</div>
-                <div class="standings-label">XAL</div>
-            </div>
-            <div class="standings-row gollu" data-team="Göllü" data-points="3">
-                <div class="standings-rank">#4</div>
-                <div class="standings-name">GÖLLÜ FK <span class="standings-star">⭐</span></div>
+            <div class="standings-row" data-team="Çivinli" data-points="3">
+                <div class="standings-rank">#5</div>
+                <div class="standings-name">ÇİVİNLİ</div>
                 <div class="standings-points">3</div>
                 <div class="standings-label">XAL</div>
             </div>
-            <div class="standings-row" data-team="Ellərkənd" data-points="0">
-                <div class="standings-rank">#5</div>
-                <div class="standings-name">ELLƏRKƏND</div>
-                <div class="standings-points">0</div>
-                <div class="standings-label">XAL</div>
-            </div>
-            <div class="standings-row" data-team="Çıvinni" data-points="0">
+            <div class="standings-row" data-team="Elləroyuğu" data-points="0">
                 <div class="standings-rank">#6</div>
-                <div class="standings-name">ÇİVİNNİ</div>
+                <div class="standings-name">ELLƏROYUĞU</div>
                 <div class="standings-points">0</div>
                 <div class="standings-label">XAL</div>
             </div>
-            <div class="standings-row" data-team="Çıvinni" data-points="0">
+            <div class="standings-row" data-team="Oxçoğlu" data-points="0">
                 <div class="standings-rank">#7</div>
                 <div class="standings-name">OXÇOĞLU</div>
                 <div class="standings-points">0</div>
@@ -1474,10 +1679,16 @@
         </div>
 
         <div class="scorers-list" id="scorersList">
-            <div class="scorer-row first" data-player="Sadiq Qurbanov" data-goals="7">
+            <div class="scorer-row first" data-player="Sadiq Qurbanov" data-goals="8">
                 <div class="scorer-medal">🥇</div>
                 <div class="scorer-name">SADIQ QURBANOV</div>
-                <div class="scorer-goals">7</div>
+                <div class="scorer-goals">8</div>
+                <div class="scorer-goals-label">QOL</div>
+            </div>
+            <div class="scorer-row" data-player="Hüseyn Qəribov" data-goals="3">
+                <div class="scorer-medal">🥈</div>
+                <div class="scorer-name">HÜSEYN QƏRİBOV</div>
+                <div class="scorer-goals">3</div>
                 <div class="scorer-goals-label">QOL</div>
             </div>
             <div class="scorer-row" data-player="Mövlud Yusifov" data-goals="1">
@@ -1544,29 +1755,68 @@
                     <tr><th>Tur</th><th>Oyun</th><th>Tarix</th><th>Saat</th><th>Məkan</th></tr>
                 </thead>
                 <tbody>
-                    <tr class="gollu-row"><td><span class="tour-badge">I</span></td><td>Güllüce — Göllü</td><td>Sentyabr 13</td><td>17:00</td><td>Bakı Tennis Akademiyası</td></tr>
-                    <tr><td><span class="tour-badge">I</span></td><td>Ellərkənd — İlannı</td><td>Sentyabr 13</td><td>18:00</td><td>Bakı Tennis Akademiyası</td></tr>
+                    <tr class="gollu-row"><td><span class="tour-badge">I</span></td><td>Güllücə — Göllü</td><td>Sentyabr 13</td><td>17:00</td><td>Bakı Tennis Akademiyası</td></tr>
+                    <tr><td><span class="tour-badge">I</span></td><td>Ellərkənd — İlanlı</td><td>Sentyabr 13</td><td>18:00</td><td>Bakı Tennis Akademiyası</td></tr>
                     <tr><td><span class="tour-badge">I</span></td><td>Daşkörpü — Oxçoğlu</td><td>Sentyabr 13</td><td>19:00</td><td>Bakı Tennis Akademiyası</td></tr>
-                    <tr><td><span class="tour-badge">II</span></td><td>İlannı — Daşkörpü</td><td>Sentyabr 20</td><td>16:00</td><td>Bakı Tennis Akademiyası</td></tr>
+                    <tr><td><span class="tour-badge">II</span></td><td>İlanlı — Daşkörpü</td><td>Sentyabr 20</td><td>16:00</td><td>Bakı Tennis Akademiyası</td></tr>
                     <tr class="gollu-row"><td><span class="tour-badge">II</span></td><td>Göllü — Ellərkənd</td><td>Sentyabr 20</td><td>17:00</td><td>Bakı Tennis Akademiyası</td></tr>
-                    <tr><td><span class="tour-badge">II</span></td><td>Çivinni — Güllüce</td><td>Sentyabr 20</td><td>19:00</td><td>Bakı Tennis Akademiyası</td></tr>
-                    <tr><td><span class="tour-badge">III</span></td><td>Ellərkənd — Çivinni</td><td>Sentyabr 27</td><td>17:00</td><td>Bakı Tennis Akademiyası</td></tr>
+                    <tr><td><span class="tour-badge">II</span></td><td>Çivinli — Güllücə</td><td>Sentyabr 20</td><td>19:00</td><td>Bakı Tennis Akademiyası</td></tr>
+                    <tr><td><span class="tour-badge">III</span></td><td>Ellərkənd — Çivinli</td><td>Sentyabr 27</td><td>17:00</td><td>Bakı Tennis Akademiyası</td></tr>
                     <tr class="gollu-row"><td><span class="tour-badge">III</span></td><td>Daşkörpü — Göllü</td><td>Sentyabr 27</td><td>18:00</td><td>Bakı Tennis Akademiyası</td></tr>
-                    <tr><td><span class="tour-badge">III</span></td><td>Oxçoğlu — İlannı</td><td>Sentyabr 27</td><td>19:00</td><td>Bakı Tennis Akademiyası</td></tr>
+                    <tr><td><span class="tour-badge">III</span></td><td>Oxçoğlu — İlanlı</td><td>Sentyabr 27</td><td>19:00</td><td>Bakı Tennis Akademiyası</td></tr>
                     <tr class="gollu-row"><td><span class="tour-badge">IV</span></td><td>Göllü — Oxçoğlu</td><td>Oktyabr 04</td><td>16:00</td><td>Bakı Tennis Akademiyası</td></tr>
-                    <tr><td><span class="tour-badge">IV</span></td><td>Çivinni — Daşkörpü</td><td>Oktyabr 04</td><td>17:00</td><td>Bakı Tennis Akademiyası</td></tr>
-                    <tr><td><span class="tour-badge">IV</span></td><td>Güllüce — Ellərkənd</td><td>Oktyabr 04</td><td>19:00</td><td>Bakı Tennis Akademiyası</td></tr>
-                    <tr><td><span class="tour-badge">V</span></td><td>Daşkörpü — Güllüce</td><td>Oktyabr 11</td><td>17:00</td><td>Bakı Tennis Akademiyası</td></tr>
-                    <tr><td><span class="tour-badge">V</span></td><td>Oxçoğlu — Çivinni</td><td>Oktyabr 11</td><td>18:00</td><td>Bakı Tennis Akademiyası</td></tr>
-                    <tr class="gollu-row"><td><span class="tour-badge">V</span></td><td>İlannı — Göllü</td><td>Oktyabr 11</td><td>19:00</td><td>Bakı Tennis Akademiyası</td></tr>
-                    <tr><td><span class="tour-badge">VI</span></td><td>Çivinni — İlannı</td><td>Oktyabr 18</td><td>16:00</td><td>Bakı Tennis Akademiyası</td></tr>
-                    <tr><td><span class="tour-badge">VI</span></td><td>Güllüce — Oxçoğlu</td><td>Oktyabr 18</td><td>17:00</td><td>Bakı Tennis Akademiyası</td></tr>
+                    <tr><td><span class="tour-badge">IV</span></td><td>Çivinli — Daşkörpü</td><td>Oktyabr 04</td><td>17:00</td><td>Bakı Tennis Akademiyası</td></tr>
+                    <tr><td><span class="tour-badge">IV</span></td><td>Güllücə — Ellərkənd</td><td>Oktyabr 04</td><td>19:00</td><td>Bakı Tennis Akademiyası</td></tr>
+                    <tr><td><span class="tour-badge">V</span></td><td>Daşkörpü — Güllücə</td><td>Oktyabr 11</td><td>17:00</td><td>Bakı Tennis Akademiyası</td></tr>
+                    <tr><td><span class="tour-badge">V</span></td><td>Oxçoğlu — Çivinli</td><td>Oktyabr 11</td><td>18:00</td><td>Bakı Tennis Akademiyası</td></tr>
+                    <tr class="gollu-row"><td><span class="tour-badge">V</span></td><td>İlanlı — Göllü</td><td>Oktyabr 11</td><td>19:00</td><td>Bakı Tennis Akademiyası</td></tr>
+                    <tr><td><span class="tour-badge">VI</span></td><td>Çivinli — İlanlı</td><td>Oktyabr 18</td><td>16:00</td><td>Bakı Tennis Akademiyası</td></tr>
+                    <tr><td><span class="tour-badge">VI</span></td><td>Güllücə — Oxçoğlu</td><td>Oktyabr 18</td><td>17:00</td><td>Bakı Tennis Akademiyası</td></tr>
                     <tr><td><span class="tour-badge">VI</span></td><td>Ellərkənd — Daşkörpü</td><td>Oktyabr 18</td><td>19:00</td><td>Bakı Tennis Akademiyası</td></tr>
                     <tr><td><span class="tour-badge">VII</span></td><td>Oxçoğlu — Ellərkənd</td><td>Oktyabr 25</td><td>17:00</td><td>Bakı Tennis Akademiyası</td></tr>
-                    <tr><td><span class="tour-badge">VII</span></td><td>İlannı — Güllüce</td><td>Oktyabr 25</td><td>18:00</td><td>Bakı Tennis Akademiyası</td></tr>
-                    <tr class="gollu-row"><td><span class="tour-badge">VII</span></td><td>Göllü — Çivinni</td><td>Oktyabr 25</td><td>19:00</td><td>Bakı Tennis Akademiyası</td></tr>
+                    <tr><td><span class="tour-badge">VII</span></td><td>İlanlı — Güllücə</td><td>Oktyabr 25</td><td>18:00</td><td>Bakı Tennis Akademiyası</td></tr>
+                    <tr class="gollu-row"><td><span class="tour-badge">VII</span></td><td>Göllü — Çivinli</td><td>Oktyabr 25</td><td>19:00</td><td>Bakı Tennis Akademiyası</td></tr>
                 </tbody>
             </table>
+        </div>
+    </section>
+
+    <!-- HƏFTƏNİN HESABI (YENİ BÖLMƏ) -->
+    <section id="week-account">
+        <div class="section-header reveal">
+            <span class="section-tag">// Həftəlik Nəticələr</span>
+            <h2 class="section-title">HƏFTƏNİN HESABI</h2>
+            <div class="section-line"></div>
+        </div>
+        <div class="week-results-list">
+            <div class="week-result-row reveal">
+                <div class="week-match">GÜLLÜBULAQ <span class="week-score">4 - 2</span> DÜZKƏND</div>
+                <span class="week-badge">HƏFTƏ 3</span>
+            </div>
+            <div class="week-result-row reveal">
+                <div class="week-match">QUZUKƏND <span class="week-score">9 - 5</span> MAĞARACIQ</div>
+                <span class="week-badge">HƏFTƏ 3</span>
+            </div>
+            <div class="week-result-row reveal">
+                <div class="week-match">ÇAXMAQ <span class="week-score">5 - 3</span> ÖKSÜZ</div>
+                <span class="week-badge">HƏFTƏ 3</span>
+            </div>
+            <div class="week-result-row reveal">
+                <div class="week-match">ÇİVİNLİ <span class="week-score">6 - 4</span> ELLƏROYUĞU</div>
+                <span class="week-badge">HƏFTƏ 3</span>
+            </div>
+            <div class="week-result-row gollu-week reveal">
+                <div class="week-match">GÖLLÜ <span class="week-score">4 - 2</span> DAŞKÖRPÜ</div>
+                <span class="week-badge">HƏFTƏ 3</span>
+            </div>
+            <div class="week-result-row reveal">
+                <div class="week-match">İLANLI <span class="week-score">10 - 1</span> OXÇOĞLU</div>
+                <span class="week-badge">HƏFTƏ 3</span>
+            </div>
+            <div class="week-result-row reveal">
+                <div class="week-match">GÜLLÜCƏ <span class="week-score">—</span> QARACANTA</div>
+                <span class="week-badge">İSTİRAHƏT</span>
+            </div>
         </div>
     </section>
 
@@ -1579,64 +1829,23 @@
         </div>
         <div class="results-grid">
             <div class="result-card win reveal">
+                <div class="match-info">III TUR • SENTYABR 27</div>
+                <div class="score">GÖLLÜ 4 — 2 DAŞKÖRPÜ</div>
+                <div class="status">✓ QƏLƏBƏ</div>
+            </div>
+            <div class="result-card win reveal">
                 <div class="match-info">II TUR • SENTYABR 20</div>
                 <div class="score">GÖLLÜ 5 — 3 ELLƏRKƏND</div>
                 <div class="status">✓ QƏLƏBƏ</div>
             </div>
             <div class="result-card loss reveal">
                 <div class="match-info">I TUR • SENTYABR 13</div>
-                <div class="score">GÜLLÜCE 4 — 3 GÖLLÜ</div>
+                <div class="score">GÜLLÜCƏ 4 — 3 GÖLLÜ</div>
                 <div class="status">✗ MƏĞLUBİYYƏT</div>
             </div>
         </div>
     </section>
-     <!-- ======== WEEKLY RESULTS PANEL (YENİ) ========  elave--> 
-    <section class="weekly-section" id="weekly">
-        <div class="weekly-panel reveal">
-            <div class="weekly-header">
-                <div class="weekly-badge">📅 BU HƏFTƏ</div>
-                <h2 class="weekly-title">HƏFTƏNİN NƏTİCƏLƏRİ</h2>
-                <p class="weekly-subtitle">B QRUPU • BÜTÜN OYUNLAR</p>
-            </div>
 
-            <div class="weekly-grid">
-                <div class="weekly-match draw">
-                    <div class="weekly-team home">İLANLI</div>
-                    <div class="weekly-score">3 — 3</div>
-                    <div class="weekly-team away">DAŞKÖRPÜ</div>
-                </div>
-                <div class="weekly-match win">
-                    <div class="weekly-team home">MAĞARACIQ</div>
-                    <div class="weekly-score">6 — 5</div>
-                    <div class="weekly-team away">GÜLLÜBULAĞ</div>
-                </div>
-                <div class="weekly-match win">
-                    <div class="weekly-team home">ÇİVİNLİ</div>
-                    <div class="weekly-score">4 — 5</div>
-                    <div class="weekly-team away">GÜLLÜCE</div>
-                </div>
-                <div class="weekly-match win">
-                    <div class="weekly-team home">ELLƏR OYUĞU</div>
-                    <div class="weekly-score">3 — 5</div>
-                    <div class="weekly-team away">GÖLLÜ</div>
-                </div>
-                <div class="weekly-match win">
-                    <div class="weekly-team home">QARAÇANTA</div>
-                    <div class="weekly-score">1 — 3</div>
-                    <div class="weekly-team away">ÇAXMAQ</div>
-                </div>
-                <div class="weekly-match win">
-                    <div class="weekly-team home">DÜZKƏND</div>
-                    <div class="weekly-score">0 — 3</div>
-                    <div class="weekly-team away">OYSUZ</div>
-                </div>
-            </div>
-
-            <div class="weekly-footer">
-                <p>Cəmi <strong>6</strong> oyun • B Qrupu</p>
-            </div>
-        </div>
-    </section>
     <!-- UPCOMING -->
     <section>
         <div class="section-header reveal">
@@ -1646,19 +1855,15 @@
         </div>
         <div class="upcoming-list">
             <div class="upcoming-item reveal">
-                <div class="upcoming-opponent"><span class="vs-icon">⚔</span> DAŞKÖRPÜ</div>
-                <div class="upcoming-date"><span class="tour">III TUR</span>Sentyabr 27 • 18:00</div>
-            </div>
-            <div class="upcoming-item reveal">
                 <div class="upcoming-opponent"><span class="vs-icon">⚔</span> OXÇOĞLU</div>
                 <div class="upcoming-date"><span class="tour">IV TUR</span>Oktyabr 04 • 16:00</div>
             </div>
             <div class="upcoming-item reveal">
-                <div class="upcoming-opponent"><span class="vs-icon">⚔</span> İLANNI</div>
+                <div class="upcoming-opponent"><span class="vs-icon">⚔</span> İLANLI</div>
                 <div class="upcoming-date"><span class="tour">V TUR</span>Oktyabr 11 • 19:00</div>
             </div>
             <div class="upcoming-item reveal">
-                <div class="upcoming-opponent"><span class="vs-icon">⚔</span> ÇİVİNNİ</div>
+                <div class="upcoming-opponent"><span class="vs-icon">⚔</span> ÇİVİNLİ</div>
                 <div class="upcoming-date"><span class="tour">VII TUR</span>Oktyabr 25 • 19:00</div>
             </div>
         </div>
@@ -1668,7 +1873,7 @@
     <footer>
         <img src="logo.png" alt="Göllü FK Loqo" class="footer-logo-img">
         <div class="footer-logo">GÖLLÜ FK</div>
-        <p>&copy; 2026 Göllü Futbol Klubu. Bütün hüquqlar qorunur.</p>
+        <p>&copy; 2025 Göllü Futbol Klubu. Bütün hüquqlar qorunur.</p>
         <p>Menecer: İbrahimov Məmmədcan • Baş Məşqçi: Saday R.</p>
         <div class="footer-slogan">"Qapıya udara qoyma" ⚽</div>
     </footer>
